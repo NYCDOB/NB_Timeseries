@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>New Buildings</title>
+    <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" />
+    <link href="nv.d3.css" rel="stylesheet" type="text/css">
+
+  </head>
+
+  <style>
+
+  
+  
+    html, body, #container {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+	  background-color: #FAFAFA;
+    }
+
+    body {
+	  font-weight: bold;
+	  font-family: 'Helvetica';
+	  
+    }
+
+	h2 {
+    text-align: center;
+	font-weight: bold;
+	color: #454545;
+	background-color: #FAFAFA;
+}
+    
+    #map {
+      width: auto;
+      height: calc(100% - 240px);
+    }
+    
+    #chart, svg {
+      width: 100%;
+      height: 180px;
+      position:relative;
+    }
+	
+	div.cartodb-timeslider {
+    position: absolute;
+    display: inline-block;
+    height: 40px;
+    width: auto!important;
+    margin-bottom: 30px;
+    padding: 20px!important;
+    -webkit-box-shadow: rgba(0,0,0,.0) 0 0 4px 2px;
+    -moz-box-shadow: rgba(0,0,0,.0) 0 0 4px 2px;
+    box-shadow: rgba(0,0,0,.0) 0 0 4px 2px;
+    background: rgba(153, 153, 153, 0.0)!important;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    border: 0px solid #9f3700!important;
+    text-align: left;
+    z-index: 105;   
+}
+
+
+
+div.cartodb-timeslider p {
+    width: 250px!important;
+    margin: 0;
+    line-height: 40px;
+    font-size: 60px!important;
+    font-weight: 700;
+    font-family: Helvetica,Arial;
+    text-align: center;
+    color: rgb(255, 250, 250)!important;
+}
+
+
+
+	
+
+	
+	
+
+  </style>
+
+  <body>
+
+			<h2>
+				NYC Commercial Development (1996 - 2016)
+			</h2>
+
+</div>
+    <div id="container">
+      <div id="map">
+      </div>
+		<div id="chart">
+      </div>
+    </div>
+
+
+    <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.13/cartodb.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="./js/nv.d3.js"></script>
+    <script src="./js/chart.js"></script>
+    <script>
+
+    var map = new L.Map('map', { 
+      center: [40.754622,-73.986958], 
+      zoom: 13
+    });
+	
+
+    L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+    }).addTo(map);
+
+    var layerUrl = 'https://timothymartin76.carto.com/api/v2/viz/c84dc4ec-2ed0-11e7-9b75-0e3ebc282e83/viz.json';
+	
+
+    cartodb.createLayer(map, layerUrl, {
+	title: true,
+	center_lat: 40.694526, 
+	center_lon: -73.936176,
+	zoom: 14
+})
+	
+      .addTo(map)
+      .on('done', function(layer) {
+        layer.on('change:time', function(changes) {
+
+        //update the vertical bar
+        verticalBar.attr("x1",chart.xAxis.scale()(new Date(changes.time))+chart.margin().left)
+          .attr("x2",chart.xAxis.scale()(new Date(changes.time))+chart.margin().left)
+        });
+
+      }).on('error', function() {
+        //log the error
+      });
+
+    //Logs current map center and zoom level for use in map init options
+    map.on('dragend',getInit).on('zoomend',getInit);
+
+    function getInit() {
+      var c = map.getCenter();
+      console.log('center: [' + c.lat + ',' + c.lng + '],\nzoom: ' + map.getZoom());
+    }
+
+    </script>
+  </body>
+</html>
