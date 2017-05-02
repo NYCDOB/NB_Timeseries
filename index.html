@@ -9,7 +9,6 @@
     <title>New Buildings</title>
     <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/themes/css/cartodb.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" />
     <link href="nv.d3.css" rel="stylesheet" type="text/css">
 
   </head>
@@ -93,16 +92,14 @@ div.cartodb-timeslider p {
   </style>
 
   <body>
-
-			<h2>
-				NYC Commercial Development (1996 - 2016)
-			</h2>
-
+	<h2>
+	NYC Commercial Development (1996 - 2016)
+	</h2>
 </div>
     <div id="container">
       <div id="map">
       </div>
-		<div id="chart">
+	<div id="chart">
       </div>
     </div>
 
@@ -119,7 +116,7 @@ div.cartodb-timeslider p {
     });
 	
 
-    L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
     }).addTo(map);
 
     var layerUrl = 'https://timothymartin76.carto.com/api/v2/viz/c84dc4ec-2ed0-11e7-9b75-0e3ebc282e83/viz.json';
